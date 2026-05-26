@@ -1,34 +1,102 @@
-.wrap {
+.minimalClockContainer {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+  max-width: 320px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  z-index: 10;
+  font-family: var(--font-display);
 }
 
-.time {
-  font-size: clamp(40px, 6vw, 72px);
-  font-weight: 500;
-  letter-spacing: 4px;
-  color: var(--landing-ink);
+.minimalClockSkeleton {
+  width: 200px;
+  height: 80px;
+  opacity: 0.1;
+  background: var(--landing-ink-subtle);
+  border-radius: var(--linear-radius-sm);
+}
+
+.dateLabelRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.accentDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--linear-primary, #6366f1);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
+  animation: breathingDot 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes breathingDot {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+.dateText {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--landing-ink-subtle);
+  letter-spacing: 0.12em;
+}
+
+.timeTextRow {
   display: flex;
   align-items: baseline;
+  color: var(--landing-ink);
+  line-height: 1;
+}
+
+.timeDigit {
+  font-size: clamp(38px, 6vw, 56px);
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  font-family: var(--font-display);
-  transition: color 0.3s ease;
+  letter-spacing: -0.02em;
 }
 
-.sep {
-  opacity: 0.45;
-  margin: 0 8px;
-}
-
-.seconds {
-  font-size: 0.6em;
-}
-
-.date {
-  font-size: 14px;
+.timeDigitSec {
+  font-size: clamp(24px, 4vw, 36px);
   font-weight: 500;
+  font-variant-numeric: tabular-nums;
   color: var(--landing-ink-subtle);
-  letter-spacing: 0.04em;
-  font-family: var(--font-body);
+  opacity: 0.8;
+  margin-left: 2px;
+}
+
+.timeSeparator {
+  font-size: 0.9em;
+  color: var(--landing-ink-subtle);
+  opacity: 0.35;
+  margin: 0 4px;
+}
+
+.timeSubtitle {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--landing-ink-subtle);
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+  margin-top: 4px;
+}
+
+@media (max-width: 1024px) {
+  .minimalClockContainer {
+    align-items: center;
+    text-align: center;
+  }
 }

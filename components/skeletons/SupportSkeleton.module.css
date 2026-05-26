@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-4);
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.headerRight {
+  display: flex;
+  gap: 12px;
+}
+
+.strip {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.stripItem {
+  flex: 1;
+  height: 80px;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-secondary);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: var(--space-5);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket {
+  height: 100px;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-secondary);
+}
+
+.panel {
+  height: 500px;
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-secondary);
+}
+
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}

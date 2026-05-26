@@ -23,6 +23,46 @@
   opacity: 1;
 }
 
+.parallaxContainer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.parallaxShape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.shape1 {
+  width: 400px;
+  height: 400px;
+  background: rgba(99, 102, 241, 0.25);
+  top: 10%;
+  left: -100px;
+}
+
+.shape2 {
+  width: 600px;
+  height: 600px;
+  background: rgba(168, 85, 247, 0.2);
+  top: 40%;
+  right: -200px;
+}
+
+.shape3 {
+  width: 500px;
+  height: 500px;
+  background: rgba(56, 189, 248, 0.2);
+  bottom: -100px;
+  left: 20%;
+}
+
 .landingBgText {
   font-size: clamp(56px, 12vw, 140px);
   font-weight: 800;
@@ -241,56 +281,93 @@
 }
 
 .featureCard {
-  border-radius: var(--linear-radius-lg);
-  padding: 32px 28px;
-  min-height: 260px;
+  border-radius: var(--linear-radius-xl);
+  padding: 36px 32px;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
   cursor: default;
-  transition: transform 0.25s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
+  background: rgba(var(--bg-surface-rgb), 0.3);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(var(--border-light-rgb), 0.2);
+  z-index: 1;
+}
+
+[data-theme='dark'] .featureCard {
+  background: rgba(25, 25, 25, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .featureCard:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  border-color: rgba(var(--border-light-rgb), 0.4);
 }
 
-.featureTab {
+.featureGlow {
   position: absolute;
-  top: 0;
-  left: 28px;
-  width: 56px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.25);
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--feature-color) 0%, transparent 60%);
+  opacity: 0.05;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: -1;
 }
 
-.featureIcon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+.featureCard:hover .featureGlow {
+  opacity: 0.12;
+}
+
+.featureIconWrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
-  color: #fff;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme='dark'] .featureIconWrapper {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.featureIconWrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--feature-color);
+  opacity: 0.15;
+}
+
+.featureIcon {
+  color: var(--feature-color);
+  z-index: 1;
 }
 
 .featureCard h3 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  margin-bottom: 12px;
-  color: #fff;
-  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+  color: var(--landing-ink);
+  letter-spacing: -0.02em;
 }
 
 .featureCard p {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 14px;
+  color: var(--landing-ink-subtle);
+  font-size: 15px;
   line-height: 1.6;
   font-family: var(--font-body);
 }
@@ -477,6 +554,15 @@
   display: flex;
   width: max-content;
   animation: marquee 40s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .marqueeCard {

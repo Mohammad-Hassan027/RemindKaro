@@ -1,0 +1,29 @@
+/* components/ui/CheckoutButton.module.css */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: var(--linear-radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+  background: var(--linear-primary);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--linear-primary-hover);
+  box-shadow: 0 4px 16px rgba(94, 106, 210, 0.35);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

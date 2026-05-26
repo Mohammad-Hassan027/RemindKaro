@@ -35,6 +35,33 @@ export default function DashboardLayout({ children }) {
               Home
             </span>
           </Link>
+          <Link
+            href="/dashboard/profile"
+            className={`${styles.navLink} ${pathname === "/dashboard/profile" ? styles.active : ""}`}
+          >
+            <span className={styles.navLinkFull}>Profile</span>
+            <span className={styles.navLinkShort} aria-hidden>
+              Me
+            </span>
+          </Link>
+          <Link
+            href="/dashboard/support"
+            className={`${styles.navLink} ${pathname.startsWith("/dashboard/support") ? styles.active : ""}`}
+          >
+            <span className={styles.navLinkFull}>Support</span>
+            <span className={styles.navLinkShort} aria-hidden>
+              Help
+            </span>
+          </Link>
+          <Link
+            href="/pricing"
+            className={`${styles.navLink} ${pathname === "/pricing" ? styles.active : ""}`}
+          >
+            <span className={styles.navLinkFull}>Pricing</span>
+            <span className={styles.navLinkShort} aria-hidden>
+              Pro
+            </span>
+          </Link>
           <ThemeToggle compact />
           <div className={styles.navDivider} />
           <button onClick={handleLogout} className={styles.logoutBtn}>

@@ -1,0 +1,711 @@
+/* ─── Wrapper ─────────────────────────────────────────────────────────────── */
+.screenWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  perspective: 1100px;
+  perspective-origin: 50% 45%;
+}
+
+/* ─── 3-D scene container ─────────────────────────────────────────────────── */
+.phoneScene {
+  transform-style: preserve-3d;
+  animation: idleTilt 7s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes idleTilt {
+  0% {
+    transform: rotateY(-8deg) rotateX(3deg);
+  }
+  50% {
+    transform: rotateY(5deg) rotateX(-2deg);
+  }
+  100% {
+    transform: rotateY(-6deg) rotateX(2.5deg);
+  }
+}
+
+/* ─── Phone Frame ─────────────────────────────────────────────────────────── */
+.phoneFrame {
+  position: relative;
+  width: 288px;
+  height: 600px;
+  background: #09090b; /* space-black matte base */
+  border-radius: 46px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    /* specular rim highlights */
+    inset 0 1px 2px rgba(255, 255, 255, 0.25),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.5),
+    /* Layered 3D extrusion (matte titanium space black) */ -1px 1px 0px #2a2a35,
+    -2px 2px 0px #24242e,
+    -3px 3px 0px #1f1f27,
+    -4px 4px 0px #1a1a20,
+    -5px 5px 0px #16161a,
+    -6px 6px 0px #121215,
+    -7px 7px 0px #0f0f12,
+    -8px 8px 0px #0c0c0f,
+    -9px 9px 0px #09090c,
+    -10px 10px 0px #060608,
+    /* deep ambient shadows */ -16px 20px 42px rgba(0, 0, 0, 0.8),
+    -32px 40px 85px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+}
+
+/* ─── Bezel-inset Screen Panel ────────────────────────────────────────────── */
+.innerScreen {
+  position: absolute;
+  inset: 3px; /* realistic bezel margin */
+  background: #000;
+  border-radius: 43px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+}
+
+/* ─── Glass highlight on top-left (specular layer) ────────────────────────── */
+.glassReflection {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 30%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 30;
+}
+
+/* Secondary edge shimmer (right side) */
+.glassReflection::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 40%
+  );
+}
+
+/* ─── Physical Buttons (Tactile 3D Extrusion) ─────────────────────────────── */
+.muteSwitch,
+.volUp,
+.volDown {
+  position: absolute;
+  left: -7px; /* stick out from body */
+  width: 7px;
+  border-radius: 4px 0 0 4px;
+  background: linear-gradient(to right, #18181f, #3a3a46);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    -1px 2px 4px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+.muteSwitch {
+  top: 110px;
+  height: 26px;
+}
+.volUp {
+  top: 154px;
+  height: 44px;
+}
+.volDown {
+  top: 210px;
+  height: 44px;
+}
+
+.powerBtn {
+  position: absolute;
+  right: -7px; /* stick out from body */
+  top: 170px;
+  width: 7px;
+  height: 60px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(to left, #18181f, #3a3a46);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    1px 2px 4px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+/* ─── Status Bar ───────────────────────────────────────────────────────────── */
+.statusBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 22px 6px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.statusTime {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.01em;
+  font-feature-settings: 'tnum';
+}
+
+.statusAmpm {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.65;
+}
+
+.statusIcons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ─── Dynamic Island ───────────────────────────────────────────────────────── */
+.dynamicIslandWrapper {
+  position: absolute;
+  top: 8px; /* elevated position slightly up */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+}
+
+.dynamicIsland {
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+/* Collapsed state: two sensor dots */
+.islandDots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+}
+
+.sensorDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.9);
+}
+
+.cameraDot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2a2a2a, #0d0d11);
+  box-shadow:
+    0 0 0 1px #111,
+    inset 0 0 3px rgba(30, 100, 200, 0.25);
+}
+
+/* Expanded state with Bell icon + text category */
+.islandBellContent {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.islandBellIcon {
+  filter: drop-shadow(0 0 6px currentColor);
+  animation: islandBellRing 0.5s ease-out;
+  flex-shrink: 0;
+}
+
+.islandBellText {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes islandBellRing {
+  0% {
+    transform: scale(0.6) rotate(0deg);
+  }
+  20% {
+    transform: scale(1.15) rotate(-25deg);
+  }
+  40% {
+    transform: scale(1.15) rotate(20deg);
+  }
+  60% {
+    transform: scale(1) rotate(-15deg);
+  }
+  80% {
+    transform: scale(1) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* ─── Micro-Haptic Vibration (buzzes entire phone body) ───────────────────── */
+@keyframes phoneHapticBuzz {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  10% {
+    transform: translate3d(-1px, 0.5px, 0);
+  }
+  20% {
+    transform: translate3d(1px, -0.5px, 0);
+  }
+  30% {
+    transform: translate3d(-0.8px, -0.8px, 0);
+  }
+  40% {
+    transform: translate3d(0.8px, 0.8px, 0);
+  }
+  50% {
+    transform: translate3d(-0.5px, 0.5px, 0);
+  }
+  60% {
+    transform: translate3d(0.5px, -0.5px, 0);
+  }
+  70% {
+    transform: translate3d(-0.3px, -0.3px, 0);
+  }
+  80% {
+    transform: translate3d(0.3px, 0.3px, 0);
+  }
+  90% {
+    transform: translate3d(-0.1px, 0.1px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.phoneVibrate {
+  animation: phoneHapticBuzz 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* ─── Light Mode Titanium Chassis (Polished Silver/Platinum) ──────────────── */
+:global([data-theme='light']) .phoneFrame {
+  background: #f1f5f9; /* sleek silver aluminum base */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow:
+    /* specular rim highlights */
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.15),
+    /* Layered 3D extrusion (Polished Titanium Silver) */ -1px 1px 0px #cbd5e1,
+    -2px 2px 0px #cbd5e1,
+    -3px 3px 0px #94a3b8,
+    -4px 4px 0px #94a3b8,
+    -5px 5px 0px #64748b,
+    -6px 6px 0px #64748b,
+    -7px 7px 0px #475569,
+    -8px 8px 0px #475569,
+    -9px 9px 0px #334155,
+    -10px 10px 0px #1e293b,
+    /* deep ambient soft drop shadow */ -16px 20px 42px rgba(0, 0, 0, 0.12),
+    -32px 40px 85px rgba(0, 0, 0, 0.08);
+}
+
+:global([data-theme='light']) .muteSwitch,
+:global([data-theme='light']) .volUp,
+:global([data-theme='light']) .volDown {
+  background: linear-gradient(to right, #94a3b8, #cbd5e1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    -1px 2px 3px rgba(0, 0, 0, 0.15);
+}
+
+:global([data-theme='light']) .powerBtn {
+  background: linear-gradient(to left, #94a3b8, #cbd5e1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    1px 2px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Screen / Lock ────────────────────────────────────────────────────────── */
+.screenContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 16px 0;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--active-color-rgb, 15, 15, 20), 0.06) 0%,
+    transparent 40%
+  );
+}
+
+/* ─── Lock-screen time ─────────────────────────────────────────────────────── */
+.lockTimeGroup {
+  text-align: center;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.lockDate {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+.lockTime {
+  margin: 0;
+  font-size: 54px;
+  font-weight: 200;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-feature-settings: 'tnum';
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.08);
+}
+
+.lockAmpm {
+  font-size: 20px;
+  font-weight: 300;
+  margin-left: 4px;
+  opacity: 0.6;
+  vertical-align: super;
+}
+
+/* ─── Notification Zone ────────────────────────────────────────────────────── */
+.notificationZone {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Bell Pop-up ──────────────────────────────────────────────────────────── */
+.bellAnchor {
+  position: relative;
+  height: 32px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.bellPopup {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 0 16px var(--bell-color),
+    0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 15;
+  animation: bellRing 0.4s ease-out;
+}
+
+@keyframes bellRing {
+  0% {
+    transform: rotate(-15deg);
+  }
+  25% {
+    transform: rotate(12deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* ─── Notification Banner ──────────────────────────────────────────────────── */
+.notificationBanner {
+  background: rgba(28, 28, 32, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 2px solid transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 12px 14px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+/* Left accent stripe */
+.notificationBanner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--active-color, #fff);
+  border-radius: 20px 0 0 20px;
+  opacity: 0.85;
+}
+
+/* ─── Haptic Vibration (subtle — like a real phone buzz) ─────────────────── */
+@keyframes hapticBuzz {
+  0% {
+    transform: translateX(0px);
+  }
+  10% {
+    transform: translateX(-1.5px);
+  }
+  25% {
+    transform: translateX(1.5px);
+  }
+  40% {
+    transform: translateX(-1px);
+  }
+  55% {
+    transform: translateX(0.8px);
+  }
+  70% {
+    transform: translateX(-0.5px);
+  }
+  85% {
+    transform: translateX(0.3px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.bannerVibrate {
+  animation: hapticBuzz 0.42s ease-out forwards;
+}
+
+/* ─── Banner Inner Layout ──────────────────────────────────────────────────── */
+.bannerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.bannerAppInfo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.appIconContainer {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.appName {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bannerTime {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 500;
+}
+
+.bannerContent {
+  padding-left: 6px;
+}
+
+.bannerTitle {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.25;
+}
+
+.bannerDesc {
+  margin: 0;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.45;
+}
+
+/* ─── Ripple (phone-call type) ─────────────────────────────────────────────── */
+.rippleWrap {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+}
+
+.ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  opacity: 0;
+  animation: rippleOut 2s ease-out infinite;
+}
+
+@keyframes rippleOut {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* ─── Action Label ─────────────────────────────────────────────────────────── */
+.actionLabel {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 6px 0;
+  flex-shrink: 0;
+}
+
+.actionDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+
+.actionText {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.38);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* ─── Scrubber ─────────────────────────────────────────────────────────────── */
+.scrubberContainer {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 10px 22px 0;
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.scrubberProgress {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.06s linear;
+}
+
+/* ─── Bottom Controls ──────────────────────────────────────────────────────── */
+.bottomControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 22px 4px;
+  flex-shrink: 0;
+}
+
+.mediaControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.controlBtn {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.5);
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+  padding: 0;
+}
+
+.controlBtn:hover {
+  background: rgba(255, 255, 255, 0.13);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ─── Pagination Dots ──────────────────────────────────────────────────────── */
+.pagDots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pagDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    width 0.2s ease,
+    background 0.2s ease;
+}
+
+.pagDotActive {
+  width: 18px;
+  border-radius: 4px;
+  background: var(--dot-color, #fff);
+}
+
+/* ─── Home Indicator ───────────────────────────────────────────────────────── */
+.homeIndicator {
+  height: 4px;
+  width: 100px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  margin: 6px auto 12px;
+  flex-shrink: 0;
+}

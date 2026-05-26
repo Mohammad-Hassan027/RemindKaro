@@ -67,6 +67,11 @@ export default function LandingClient({ isLoggedIn }) {
   const bgX2 = useTransform(scrollYProgress, [0, 1], ['-10%', '5%']);
   const bgX3 = useTransform(scrollYProgress, [0, 1], ['0%', '-12%']);
 
+  // Parallax effects for floating shapes
+  const floatY1 = useTransform(scrollYProgress, [0, 1], [0, -300]);
+  const floatY2 = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const floatY3 = useTransform(scrollYProgress, [0, 1], [0, -400]);
+
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2800);
     return () => clearTimeout(timer);
@@ -89,37 +94,37 @@ export default function LandingClient({ isLoggedIn }) {
       title: 'Track Deadlines',
       desc: 'Never miss a coding test or assignment. Smart notifications keep you on time.',
       icon: <Calendar size={26} strokeWidth={2} />,
-      bg: 'linear-gradient(135deg, #4f46e5, #6366f1)',
+      color: '#6366f1',
     },
     {
       title: 'Voice Entry',
       desc: 'Speak tasks and we categorize and schedule them with zero friction.',
       icon: <Mic size={26} strokeWidth={2} />,
-      bg: 'linear-gradient(135deg, #0369a1, #0ea5e9)',
+      color: '#0ea5e9',
     },
     {
       title: 'Urgency Escalation',
       desc: 'Highlights what needs attention based on time left and priority.',
       icon: <Zap size={26} strokeWidth={2} />,
-      bg: 'linear-gradient(135deg, #6d28d9, #8b5cf6)',
+      color: '#8b5cf6',
     },
     {
       title: 'Interview Prep',
       desc: 'Interview schedules and prep materials in one organized place.',
       icon: <Briefcase size={26} strokeWidth={2} />,
-      bg: 'linear-gradient(135deg, #be185d, #ec4899)',
+      color: '#ec4899',
     },
     {
       title: 'Hackathon Tracker',
       desc: 'Team submissions, milestones, and pitch deadlines in one view.',
       icon: <Trophy size={26} strokeWidth={2} />,
-      bg: 'linear-gradient(135deg, #c2410c, #f97316)',
+      color: '#f97316',
     },
     {
       title: 'Secure & Private',
       desc: 'Encrypted data. We never share or sell your schedule.',
       icon: <Lock size={26} strokeWidth={2} />,
-      bg: 'linear-gradient(135deg, #15803d, #22c55e)',
+      color: '#22c55e',
     },
   ];
 
@@ -172,7 +177,7 @@ export default function LandingClient({ isLoggedIn }) {
         'Admin dashboard',
       ],
       cta: 'Contact Sales',
-      href: 'mailto:hello@remindkaro.com',
+      href: 'mailto:support.india@remindkro.in',
       secondary: true,
     },
   ];
@@ -213,6 +218,22 @@ export default function LandingClient({ isLoggedIn }) {
       </AnimatePresence>
 
       <div className={`landing-page ${styles.page}`}>
+        {/* Parallax Floating Shapes */}
+        <div className={styles.parallaxContainer} aria-hidden>
+          <motion.div
+            className={`${styles.parallaxShape} ${styles.shape1}`}
+            style={{ y: floatY1 }}
+          />
+          <motion.div
+            className={`${styles.parallaxShape} ${styles.shape2}`}
+            style={{ y: floatY2 }}
+          />
+          <motion.div
+            className={`${styles.parallaxShape} ${styles.shape3}`}
+            style={{ y: floatY3 }}
+          />
+        </div>
+
         <div className={styles.bgTextLayer} aria-hidden>
           <motion.div className={styles.landingBgText} style={{ x: bgX1 }}>
             CODING TESTS INTERVIEWS HACKATHONS
@@ -345,7 +366,7 @@ export default function LandingClient({ isLoggedIn }) {
             </div>
           </div>
 
-          <section
+          <motion.section
             id="features"
             className={`feature-section ${styles.section}`}
           >
@@ -359,22 +380,24 @@ export default function LandingClient({ isLoggedIn }) {
                 <motion.div
                   key={feature.title}
                   className={styles.featureCard}
-                  style={{ background: feature.bg }}
+                  style={{ '--feature-color': feature.color }}
                   initial={{ opacity: 0, y: 48 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.55, delay: idx * 0.08 }}
                 >
-                  <div className={styles.featureTab} />
-                  <div className={styles.featureIcon}>{feature.icon}</div>
+                  <div className={styles.featureGlow} />
+                  <div className={styles.featureIconWrapper}>
+                    <div className={styles.featureIcon}>{feature.icon}</div>
+                  </div>
                   <h3>{feature.title}</h3>
                   <p>{feature.desc}</p>
                 </motion.div>
               ))}
             </div>
-          </section>
+          </motion.section>
 
-          <section
+          <motion.section
             id="pricing"
             className={`pricing-section ${styles.pricingSection}`}
           >
@@ -475,9 +498,9 @@ export default function LandingClient({ isLoggedIn }) {
                 );
               })}
             </div>
-          </section>
+          </motion.section>
 
-          <section
+          <motion.section
             className={`testimonials-section ${styles.section} ${styles.testimonials}`}
           >
             <h2
@@ -501,7 +524,7 @@ export default function LandingClient({ isLoggedIn }) {
                 </div>
               ))}
             </div>
-          </section>
+          </motion.section>
 
           <section className={`bottom-banner ${styles.bottomBanner}`}>
             <h2 className={`bottom-banner-title ${styles.bottomTitle}`}>
