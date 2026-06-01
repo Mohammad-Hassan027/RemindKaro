@@ -24,6 +24,15 @@
 .DS_Store
 *.pem
 
+# AI agent & IDE personal config (not for public)
+.agents/
+.cursor/
+CLAUDE.md
+
+# Internal business / PRD documents (not for public)
+"Remind_Karo_Guide&PRD/"
+Remind_Karo_Guide*/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
