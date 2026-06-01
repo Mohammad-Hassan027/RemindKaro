@@ -30,8 +30,11 @@
 CLAUDE.md
 
 # Internal business / PRD documents (not for public)
-"Remind_Karo_Guide&PRD/"
+Remind_Karo_Guide&PRD/
 Remind_Karo_Guide*/
+
+# Legacy maintenance page (not for public repo)
+index.html
 
 # debug
 npm-debug.log*
