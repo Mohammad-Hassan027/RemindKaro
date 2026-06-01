@@ -18,7 +18,7 @@ _Perfect for first-time contributors or developers getting familiar with the Nex
 
 ### 1. ssoc-e1: Word Count & Character Limit on Task Descriptions
 
-- **Tags:** `ssoc2026`, `easy`, `enhancement`
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `enhancement`
 - **Description:** Currently, task descriptions can be of infinite length, which distorts card sizing.
 - **Goal:** Display a character counter (e.g., `0 / 200`) below the description field in both the `TaskForm` modal. Limit the input to 200 characters maximum.
 - **Acceptance Criteria:**
@@ -28,7 +28,7 @@ _Perfect for first-time contributors or developers getting familiar with the Nex
 
 ### 2. ssoc-e2: Custom Sound Alert Toggle
 
-- **Tags:** `ssoc2026`, `easy`, `ui`
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `ui`
 - **Description:** The dashboard plays alarm chimes for critical tasks, but users should be able to disable them.
 - **Goal:** Add a simple toggle button in the dashboard header or user profile sidebar to mute/unmute notification chime sounds.
 - **Acceptance Criteria:**
@@ -37,7 +37,7 @@ _Perfect for first-time contributors or developers getting familiar with the Nex
 
 ### 3. ssoc-e3: Copy Task Link to Clipboard
 
-- **Tags:** `ssoc2026`, `easy`, `feature`
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `feature`
 - **Description:** Users want to quickly share a deadline details outline with teammates.
 - **Goal:** Add a "Copy Share Link" button on the `TaskCard` action controls that copies a summary of the task details to the clipboard.
 - **Acceptance Criteria:**
@@ -46,7 +46,7 @@ _Perfect for first-time contributors or developers getting familiar with the Nex
 
 ### 4. ssoc-e4: Drag-and-Drop Task Sorting Option
 
-- **Tags:** `ssoc2026`, `easy`, `ui`
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `ui`
 - **Description:** Tasks are currently auto-sorted. We want a simple dropdown selector to change sort criteria.
 - **Goal:** Add a dropdown menu at the top of the dashboard to let users sort tasks by: `Priority`, `Category`, or `Date Created`.
 - **Acceptance Criteria:**
@@ -55,7 +55,7 @@ _Perfect for first-time contributors or developers getting familiar with the Nex
 
 ### 5. ssoc-e5: Escape Key to Dismiss Modals
 
-- **Tags:** `ssoc2026`, `easy`, `a11y`
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `a11y`
 - **Description:** The modal overlays should close cleanly when pressing the `Escape` keyboard shortcut.
 - **Goal:** Add window-level keyboard event listeners to dismiss the Add and Edit task modals.
 - **Acceptance Criteria:**
@@ -64,7 +64,7 @@ _Perfect for first-time contributors or developers getting familiar with the Nex
 
 ### 6. ssoc-e6: Export Task List as JSON
 
-- **Tags:** `ssoc2026`, `easy`, `feature`
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `feature`
 - **Description:** Users want a quick option to export their tasks for backup.
 - **Goal:** Implement a button in the profile or settings module to download all active tasks as a formatted `.json` file.
 - **Acceptance Criteria:**
@@ -73,7 +73,7 @@ _Perfect for first-time contributors or developers getting familiar with the Nex
 
 ### 7. ssoc-e7: Categorized Custom HSL Badges
 
-- **Tags:** `ssoc2026`, `easy`, `ui`
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `ui`
 - **Description:** Category tags all look similar. We want distinct, premium colors for Work, Personal, Shopping, etc.
 - **Goal:** Assign unique subtle HSL color backgrounds to different task category badges.
 - **Acceptance Criteria:**
@@ -83,7 +83,7 @@ _Perfect for first-time contributors or developers getting familiar with the Nex
 
 ### 8. ssoc-e8: Clear Completed Tasks Button
 
-- **Tags:** `ssoc2026`, `easy`, `feature`
+- **Tags:** `ssoc2026`, `easy`, `good-first-issue`, `feature`
 - **Description:** No quick way to clear tasks that have been completed.
 - **Goal:** Add a "Clear Completed" button that bulk-archives all tasks with `Done` or `completed` status.
 - **Acceptance Criteria:**
