@@ -1,85 +1,213 @@
-# RemindKaro - Project Issues & Enhancements
+# 🎯 RemindKaro — Open Source Contributor Issue Board
 
-This document outlines a backlog of features, enhancements, and beginner-friendly issues for **RemindKaro**. If you are looking to contribute to the project, the **Good First Issues** section is a great place to start!
-
----
-
-## 🟢 Good First Issues
-
-_These are relatively small, self-contained tasks perfect for new contributors or as quick wins._
-
-### 1. Task Sorting Options
-
-**Description:** Currently, tasks on the dashboard are only sorted by deadline (earliest first).
-**Goal:** Add a dropdown menu to the dashboard that allows users to sort their tasks by:
-
-- Deadline (Default)
-- Priority (High -> Low)
-- Date Created (Newest first)
-- Alphabetical (A-Z)
-
-### 2. "Clear Completed" Button
-
-**Description:** There is no quick way to remove tasks once they are done.
-**Goal:** Add a "Clear Completed" button that bulk-deletes or bulk-archives all tasks where the status is set to `Done`.
-
-### 3. Improve Mobile Navigation
-
-**Description:** The top navigation bar in the dashboard might feel cramped on very small mobile screens.
-**Goal:** Implement a responsive "hamburger" menu for mobile viewports that hides/shows the navigation links cleanly.
-
-### 4. Accessibility (a11y) Polish on Modals
-
-**Description:** The Add Task and Edit Task modals need better accessibility support.
-**Goal:** Ensure all `<input>`, `<select>`, and `<button>` elements have proper `aria-labels`, and ensure the user can close the modal using the `Escape` key.
-
-### 5. Add a "Loading" State to NLP Input
-
-**Description:** When a user types a natural language command (e.g., "Remind me to study tomorrow at 5pm"), the parsing happens on the server.
-**Goal:** Show a small loading spinner or visual indicator while the `/api/voice/parse` endpoint is resolving the text into a structured task.
+Welcome to the **RemindKaro** contributor roadmap! This board contains beginner-friendly issues, intermediate challenges, and advanced features designed for **Social Summer of Code (SSOC) 2026** and all open-source developers.
 
 ---
 
-## 🚀 Future Enhancements (Core Features)
+## 🏷️ Guidelines for Contributors
 
-_These are larger, more complex features that will significantly improve the value of RemindKaro._
+- **Labels/Tags:** Look for the tags `ssoc2026`, `easy`, `medium`, or `hard` to identify task scope.
+- **Claiming an Issue:** Comment on the GitHub issue using `&claim` or `&assign` to let the maintainers know you are working on it.
+- **PR Standards:** Please format your code with `npm run format` and verify it passes `npm run lint` before opening a pull request.
 
-### 1. Google Calendar Integration
+---
 
-**Description:** Users want to see their RemindKaro deadlines in their primary calendar app.
-**Goal:** Implement Google OAuth to allow users to link their Google accounts. Automatically sync tasks with deadlines to the user's Google Calendar as events.
+## 🟢 Easy Issues (`ssoc2026` | `easy`)
 
-### 2. Advanced NLP for Recurring Tasks
+_Perfect for first-time contributors or developers getting familiar with the Next.js/Tailwind CSS project structure._
 
-**Description:** The current NLP parser uses `chrono-node` to extract dates, but does not fully support complex recurring logic.
-**Goal:** Upgrade the parser to accurately interpret phrases like _"Remind me to go to the gym every Monday and Wednesday"_ and map them to the database's `recurring` logic.
+### 1. ssoc-e1: Word Count & Character Limit on Task Descriptions
 
-### 3. Progressive Web App (PWA) & Push Notifications
+- **Tags:** `ssoc2026`, `easy`, `enhancement`
+- **Description:** Currently, task descriptions can be of infinite length, which distorts card sizing.
+- **Goal:** Display a character counter (e.g., `0 / 200`) below the description field in both the `TaskForm` modal. Limit the input to 200 characters maximum.
+- **Acceptance Criteria:**
+  - Character counter updates dynamically as the user types.
+  - Form validation blocks submitting if description exceeds 200 characters.
+  - Visual alert changes color to amber when reaching 180+ characters.
 
-**Description:** The escalation engine currently relies on the browser tab being open to play chimes or show browser alerts.
-**Goal:** Configure Next.js as a Progressive Web App (PWA) with Service Workers. This will allow RemindKaro to send native push notifications to mobile phones and desktops even when the app is closed.
+### 2. ssoc-e2: Custom Sound Alert Toggle
 
-### 4. Custom Categories and Tags
+- **Tags:** `ssoc2026`, `easy`, `ui`
+- **Description:** The dashboard plays alarm chimes for critical tasks, but users should be able to disable them.
+- **Goal:** Add a simple toggle button in the dashboard header or user profile sidebar to mute/unmute notification chime sounds.
+- **Acceptance Criteria:**
+  - Toggle state is persisted in `localStorage`.
+  - The sound engine respects the user's toggle state before executing play chime callbacks.
 
-**Description:** Tasks are currently limited to a few hardcoded categories (General, Work, Personal, etc.).
-**Goal:** Create a new `Tag` model in the Prisma schema. Allow users to create custom tags with custom hex colors and assign multiple tags to a single task.
+### 3. ssoc-e3: Copy Task Link to Clipboard
 
-### 5. Task Sharing / Collaboration
+- **Tags:** `ssoc2026`, `easy`, `feature`
+- **Description:** Users want to quickly share a deadline details outline with teammates.
+- **Goal:** Add a "Copy Share Link" button on the `TaskCard` action controls that copies a summary of the task details to the clipboard.
+- **Acceptance Criteria:**
+  - Clicking the button copies a formatted string: `[Category] Task: Title - Due: Date` to clipboard.
+  - Triggers a brief "Copied!" tooltip or toast notification.
 
-**Description:** RemindKaro is strictly single-player.
-**Goal:** Allow users to share a specific task or an entire "list" of tasks with another user via email. Add permission levels (View vs. Edit).
+### 4. ssoc-e4: Drag-and-Drop Task Sorting Option
 
-### 6. Sub-tasks System
+- **Tags:** `ssoc2026`, `easy`, `ui`
+- **Description:** Tasks are currently auto-sorted. We want a simple dropdown selector to change sort criteria.
+- **Goal:** Add a dropdown menu at the top of the dashboard to let users sort tasks by: `Priority`, `Category`, or `Date Created`.
+- **Acceptance Criteria:**
+  - Dropdown is styled to match the dark slate theme design system.
+  - Changing the dropdown selection immediately resort tasks locally.
 
-**Description:** Large tasks cannot be broken down.
-**Goal:** Allow a Task to have multiple "Sub-tasks" (essentially a checklist). The main task is only marked `Done` when all sub-tasks are checked off.
+### 5. ssoc-e5: Escape Key to Dismiss Modals
 
-### 7. User Profile & Settings Page
+- **Tags:** `ssoc2026`, `easy`, `a11y`
+- **Description:** The modal overlays should close cleanly when pressing the `Escape` keyboard shortcut.
+- **Goal:** Add window-level keyboard event listeners to dismiss the Add and Edit task modals.
+- **Acceptance Criteria:**
+  - Pressing `Esc` closes any active modal overlay.
+  - Does not throw state errors if a modal is already closed.
 
-**Description:** The app lacks a dedicated settings area.
-**Goal:** Create a `/dashboard/settings` page where users can:
+### 6. ssoc-e6: Export Task List as JSON
 
-- Change their Name and Email.
-- Change their password.
-- Toggle between Light and Dark mode preferences.
-- Configure default notification settings (e.g., "Always notify 1 hour before").
+- **Tags:** `ssoc2026`, `easy`, `feature`
+- **Description:** Users want a quick option to export their tasks for backup.
+- **Goal:** Implement a button in the profile or settings module to download all active tasks as a formatted `.json` file.
+- **Acceptance Criteria:**
+  - Clicking triggers a file download named `remindkaro-export-[date].json`.
+  - Includes task titles, deadlines, priorities, and statuses.
+
+### 7. ssoc-e7: Categorized Custom HSL Badges
+
+- **Tags:** `ssoc2026`, `easy`, `ui`
+- **Description:** Category tags all look similar. We want distinct, premium colors for Work, Personal, Shopping, etc.
+- **Goal:** Assign unique subtle HSL color backgrounds to different task category badges.
+- **Acceptance Criteria:**
+  - `Work` category uses a subtle lavender tint.
+  - `Personal` category uses a subtle emerald tint.
+  - `Urgent` tasks display with soft crimson accent rings.
+
+### 8. ssoc-e8: Clear Completed Tasks Button
+
+- **Tags:** `ssoc2026`, `easy`, `feature`
+- **Description:** No quick way to clear tasks that have been completed.
+- **Goal:** Add a "Clear Completed" button that bulk-archives all tasks with `Done` or `completed` status.
+- **Acceptance Criteria:**
+  - Button only displays if there are tasks with a completed status.
+  - Clicking triggers a bulk update API request to change status to `archived` or soft-delete.
+
+---
+
+## 🟡 Medium Issues (`ssoc2026` | `medium`)
+
+_Requires intermediate familiarity with React hooks, local state synchronization, API proxies, and DB queries._
+
+### 9. ssoc-m1: Batch/Bulk Task Actions
+
+- **Tags:** `ssoc2026`, `medium`, `feature`
+- **Description:** Managing tasks one-by-one is slow when cleaning up.
+- **Goal:** Add checkboxes to each `TaskCard` and a floating "Bulk Operations" action bar when one or more tasks are selected.
+- **Acceptance Criteria:**
+  - Contributors can select multiple tasks.
+  - The bar lets users bulk-delete or bulk-change priority levels in a single action.
+  - Smooth entry/exit animations for the floating action bar.
+
+### 10. ssoc-m2: Task Completion Streak Tracker
+
+- **Tags:** `ssoc2026`, `medium`, `gamification`
+- **Description:** To incentivize consistency, users want a gamified habit/task completion streak counter.
+- **Goal:** Calculate the consecutive number of days a user has completed at least one task and render a streak icon (e.g. `🔥 7 Days`) on their profile.
+- **Acceptance Criteria:**
+  - Streak calculation logic is robust and runs on the dashboard dashboard load.
+  - Shows fire emoji with a glowing animation when a streak is active.
+
+### 11. ssoc-m3: Weekly Digest Email System
+
+- **Tags:** `ssoc2026`, `medium`, `backend`
+- **Description:** Send users a periodic roundup of their task productivity.
+- **Goal:** Implement a Cron-scheduled email builder that checks database tasks and emails a summary of finished vs. overdue items.
+- **Acceptance Criteria:**
+  - Respects email notification opt-in/opt-out settings.
+  - Utilizes clean, premium-designed transactional email templates.
+
+### 12. ssoc-m4: Deadline Heatmap Chart
+
+- **Tags:** `ssoc2026`, `medium`, `ui`
+- **Description:** Users want to visually understand which days are heavily congested.
+- **Goal:** Implement a simple Github-style calendar contribution grid (heatmap) displaying deadline intensity (days with high task volume).
+- **Acceptance Criteria:**
+  - Renders cleanly on a `/dashboard/analytics` panel.
+  - Blocks light up with deeper tints of lavender or amber for days containing multiple critical deadlines.
+
+### 13. ssoc-m5: Keyboard Navigation Shortcuts
+
+- **Tags:** `ssoc2026`, `medium`, `a11y`
+- **Description:** Power-users want mouse-free task management.
+- **Goal:** Create keydown listener shortcuts: `N` to open the task modal, `/` to focus the search bar, and `ArrowKeys` to navigate list items.
+- **Acceptance Criteria:**
+  - Key bindings do not trigger when typing inside active inputs/forms.
+  - Accessible dialog explains available keyboard combinations on `Shift + ?`.
+
+### 14. ssoc-m6: Offline Mode Cache & Sync
+
+- **Tags:** `ssoc2026`, `medium`, `pwa`
+- **Description:** If the network drops, creating a task currently causes database failures.
+- **Goal:** Cache task mutations in IndexedDB / localStorage when offline and sync them back to the database when connectivity is restored.
+- **Acceptance Criteria:**
+  - Displays a "Working Offline" banner when offline.
+  - Tasks created offline sync automatically with the backend when the browser status changes to `online`.
+
+### 15. ssoc-m7: Custom Category Builder
+
+- **Tags:** `ssoc2026`, `medium`, `database`
+- **Description:** Users are restricted to predefined categories (Work, Personal, General).
+- **Goal:** Allow users to create custom categories with custom labels and unique colors.
+- **Acceptance Criteria:**
+  - New categories are persistent and saved to the database.
+  - Custom categories are selectable in the task creation form.
+
+---
+
+## 🔴 Hard Issues (`ssoc2026` | `hard`)
+
+_Advanced tasks that require implementing web audio hooks, direct external bot webhooks, calendar syncing APIs, or third-party integrations._
+
+### 16. ssoc-h1: Google Calendar Event Sync
+
+- **Tags:** `ssoc2026`, `hard`, `integration`
+- **Description:** Deadlines should reflect in the user's primary calendar dashboard.
+- **Goal:** Implement OAuth credentials for Google APIs, enabling automatic creation of Google Calendar events when tasks with specific deadlines are created.
+- **Acceptance Criteria:**
+  - OAuth authorization request runs smoothly under a Settings tab.
+  - Mutating task details (time, title) updates the Google Calendar event in real-time.
+
+### 17. ssoc-h2: Web Audio Native Microphone Voice Capture
+
+- **Tags:** `ssoc2026`, `hard`, `voice`
+- **Description:** The voice MIC component currently uses mock API transcripts or relies on basic typing.
+- **Goal:** Connect the microphone button on the `VoiceMic` component to capture raw user voice audio using the Web Audio API, send it to a speech-to-text service, and populate the NLP parser.
+- **Acceptance Criteria:**
+  - Requests browser mic permissions cleanly.
+  - Renders a premium audio frequency waveform animation while recording.
+  - Parses the final speech transcript into a structured task.
+
+### 18. ssoc-h3: Telegram Bot Webhook Integration
+
+- **Tags:** `ssoc2026`, `hard`, `bot`
+- **Description:** Direct task creation should be accessible on mobile messaging apps.
+- **Goal:** Set up an Express webhook for a Telegram Bot that allows authenticated users to text command tasks (e.g., `/remind Learn NextJS tomorrow at 9pm`) to create tasks.
+- **Acceptance Criteria:**
+  - Securely connects a Telegram chat ID with a RemindKaro account.
+  - Parses incoming messages using the voice/NLP service and responds with confirmation messages.
+
+### 19. ssoc-h4: Monthly/Weekly Calendar Planner View
+
+- **Tags:** `ssoc2026`, `hard`, `ui`
+- **Description:** The dashboard currently lists tasks sequentially. Users need a visual monthly grid interface.
+- **Goal:** Build a full-size, responsive calendar monthly grid view on `/dashboard/calendar` showing scheduled tasks on their due days.
+- **Acceptance Criteria:**
+  - Users can click on specific day blocks to launch the `AddTaskForm` pre-populated with that day's date.
+  - Tasks display inside day blocks with priority colors.
+
+### 20. ssoc-h5: Shared Shared Tasks & Collaboration
+
+- **Tags:** `ssoc2026`, `hard`, `realtime`
+- **Description:** RemindKaro is strictly single-player.
+- **Goal:** Enable users to invite other users via email to collaborate on a shared task list.
+- **Acceptance Criteria:**
+  - Implements role permissions (Viewer vs. Collaborator).
+  - Collaborators can mark tasks done or update details, showing real-time updates for other members.
