@@ -34,6 +34,24 @@ export default function TaskForm({
       processVoiceInput(initialVoiceText);
     }
   }, [initialVoiceText]);
+  // Listen for Escape key presses and dismiss the active modal.
+  // Cleanup removes the listener when the modal unmounts.
+
+  useEffect(() => {
+    if (!onClose) return;
+
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [onClose]);
 
   const processVoiceInput = async (text) => {
     setVoiceInput(text);
