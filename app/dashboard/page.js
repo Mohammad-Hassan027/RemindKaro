@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import styles from "./page.module.css";
 import Button from "@/components/ui/Button";
-import { Plus } from "lucide-react";
+import { Plus, Volume2, VolumeX } from "lucide-react";
 import TaskCard from "@/components/tasks/TaskCard";
 import dynamic from "next/dynamic";
 import useEscalationEngine from "@/components/hooks/useEscalationEngine";
@@ -222,7 +222,29 @@ export default function DashboardPage() {
               muted ? "Unmute notification sounds" : "Mute notification sounds"
             }
           >
-            {muted ? "🔇 Muted" : "🔊 Sound"}
+            {muted ? (
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <VolumeX size={16} strokeWidth={2} aria-hidden />
+                Muted
+              </span>
+            ) : (
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+              >
+                <Volume2 size={16} strokeWidth={2} aria-hidden />
+                Sound
+              </span>
+            )}
           </Button>
           <VoiceMic onResult={handleVoiceInput} />
           <Button
