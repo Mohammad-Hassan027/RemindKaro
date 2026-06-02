@@ -53,6 +53,20 @@ export default function TaskForm({
     };
   }, [onClose]);
 
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [onClose]);
+
   const processVoiceInput = async (text) => {
     setVoiceInput(text);
     setIsProcessingVoice(true);
@@ -185,6 +199,7 @@ export default function TaskForm({
                   </label>
                   <select
                     id="priority"
+                    aria-label="Task priority"
                     className={styles.select}
                     value={priority}
                     onChange={(e) => setPriority(e.target.value)}
@@ -201,6 +216,7 @@ export default function TaskForm({
                   </label>
                   <select
                     id="category"
+                    aria-label="Task category"
                     className={styles.select}
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
